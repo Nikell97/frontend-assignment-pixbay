@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pixabay</title>
+    <script src="main.js" defer></script>
 </head>
 
 <body>
@@ -13,7 +14,7 @@
     <div class="search-options">
         <form>
             <input type="text" name="searchTerm" placeholder="Search for photos">
-            <select id="colorList">
+            <select id="colorList" name="colorList">
                 <option>Any Color</option>
                 <option>Greyscale</option>
                 <option>Transparent</option>
@@ -41,8 +42,8 @@
         </form>
     </div>
 
-    <div class="image-container">
-        <img src>
+    <div class="gallery">
+        <ul id="photos"></ul>
     </div>
 </body>
 
