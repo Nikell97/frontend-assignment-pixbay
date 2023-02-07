@@ -11,17 +11,14 @@ form.onsubmit = async event => {
     let input = rawInput.replace(" ", "+");
     let color = form.colorList.value;
 
-    let url = 'https://pixabay.com/api/?key=33444826-ce140ec6a98c30c48c958bb9d&q=' + input + '&color=' + color;
+    let url = 'https://pixabay.com/api/?key=33444826-ce140ec6a98c30c48c958bb9d&q=' + input + '&color=' + color + '&per_page=10';
     
     let response = await fetch(url);
     let json = await response.json();
-
-    let photoListItem = document.createElement('li');
-    
-
-    for (let i = 0; i < photoListItem.Length; i++)
-    {
-        photoListItem.textContent = json.i.webformatURL;
-        photoList.append(photoListItem[i]);
+  
+    for (let i = 0; i < json.hits.length; i++) {
+        let photoListItem = document.createElement('li');
+        photoListItem.textContent = json.hits[i].webformatURL;
+        photoList.append(photoListItem);
     }
 };
