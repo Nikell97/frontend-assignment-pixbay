@@ -1,39 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixbay</title>
+    <title>Pixabay</title>
 </head>
+
 <body>
     <h1>Pixabay Image Search</h1>
-    <form>
-        <input type="text" name="searchTerm" placeholder="Search for photos">
-        <select id="colorList">
-            <option>Any Color</option>
-            <option>Greyscale</option>
-            <option>Transparent</option>
-            <option>Red</option>
-            <option>Orange</option>
-            <option>Yellow</option>
-            <option>Green</option>
-            <option>Turquoise</option>
-            <option>Blue</option>
-            <option>Lilac</option>
-            <option>Pink</option>
-            <option>White</option>
-            <option>Gray</option>
-            <option>Black</option>
-            <option>Brown</option>
-        </select> 
-        <button type="submit">Submit</button>
-    </form>
-    <div>
+    <div class="search-options">
+        <form>
+            <input type="text" name="searchTerm" placeholder="Search for photos">
+            <select id="colorList">
+                <option>Any Color</option>
+                <option>Greyscale</option>
+                <option>Transparent</option>
+                <option>Red</option>
+                <option>Orange</option>
+                <option>Yellow</option>
+                <option>Green</option>
+                <option>Turquoise</option>
+                <option>Blue</option>
+                <option>Lilac</option>
+                <option>Pink</option>
+                <option>White</option>
+                <option>Gray</option>
+                <option>Black</option>
+                <option>Brown</option>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div class="page-options">
         <form>
             <button type="submit" id="previousPage">Previous page</button>
             <button type="submit" id="nextPage">Next page</button>
         </form>
     </div>
+
+    <div class="image-container">
+        <img src>
+    </div>
 </body>
+
 </html>
