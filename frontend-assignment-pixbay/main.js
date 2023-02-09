@@ -10,7 +10,8 @@ let nextPageButton = document.getElementById("nextPage");
 let pageMin = 0;
 let pageMax = 10;
 
-let numberOfPhotos = 32; //For some reason the api only gives us 32 pictures.
+let numberOfPhotosToPull = 50;
+let numberOfPhotos = 0;
 
 let json = null;
 
@@ -22,10 +23,12 @@ form.onsubmit = async event => {
     let rawColor = form.colorList.value;
     let color = rawColor.toLowerCase();
 
-    let url = 'https://pixabay.com/api/?key=33444826-ce140ec6a98c30c48c958bb9d&q=' + input + '&colors=' + color + '&per_page=' + numberOfPhotos;
+    let url = 'https://pixabay.com/api/?key=33444826-ce140ec6a98c30c48c958bb9d&q=' + input + '&colors=' + color + '&per_page=' + numberOfPhotosToPull;
     
     let response = await fetch(url);
     json = await response.json();
+
+    numberOfPhotos = json.hits.length;
 
     getPhotos(pageMin, pageMax, json);
 }
