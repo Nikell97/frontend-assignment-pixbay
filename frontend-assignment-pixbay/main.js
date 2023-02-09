@@ -4,23 +4,94 @@
 let form = document.querySelector('form');
 let photoList = document.querySelector('#photos');
 
+let previousPageButton = document.getElementById("previousPage");
+let nextPageButton = document.getElementById("nextPage");
+
+let pageMin = 0;
+let pageMax = 10;
+
+let numberOfPhotosToPull = 50;
+let numberOfPhotos = 0;
+
+let json = null;
+
 form.onsubmit = async event => {
     event.preventDefault();
 
     let rawInput = form.searchTerm.value;
     let input = rawInput.replace(" ", "+");
-    let color = form.colorList.value;
+    let rawColor = form.colorList.value;
+    let color = rawColor.toLowerCase();
 
-    let url = 'https://pixabay.com/api/?key=33444826-ce140ec6a98c30c48c958bb9d&q=' + input + '&colors=' + color + '&per_page=10';
+    let url = 'https://pixabay.com/api/?key=33444826-ce140ec6a98c30c48c958bb9d&q=' + input + '&colors=' + color + '&per_page=' + numberOfPhotosToPull;
     
     let response = await fetch(url);
-    let json = await response.json();
+    json = await response.json();
 
-    
-  
-    for (let i = 0; i < json.hits.length; i++) {
-        let photoListItem = document.createElement('img');
-        photoListItem.src = json.hits[i].webformatURL;
-        photoList.append(photoListItem);
+    numberOfPhotos = json.hits.length;
+
+    getPhotos(pageMin, pageMax, json);
+}
+
+previousPageButton.addEventListener("click", function()
+{    
+    if (pageMin > 0)
+    {
+        //Clears the current photos.
+        document.getElementById("photos").innerHTML = "";
+
+        pageMin -= 10;
+        pageMax -= 10;
+        getPhotos(pageMin, pageMax, json);
+
+        updateButtons();
     }
-};
+});
+
+nextPageButton.addEventListener("click", function()
+{    
+    if (pageMax < numberOfPhotos)
+    {
+        //Clears the current photos.
+        document.getElementById("photos").innerHTML = "";
+
+        pageMin += 10;
+        pageMax += 10;
+        getPhotos(pageMin, pageMax, json);
+
+        updateButtons();
+    }
+});
+
+function getPhotos(pageMin, pageMax, json)
+{
+    for (let i = pageMin; i < pageMax; i++) {
+        if (i < numberOfPhotos)//To keep the for loop form posting photos which dont exsists.
+        {
+            let photoListItem = document.createElement('img');
+            photoListItem.src = json.hits[i].webformatURL;
+            photoList.append(photoListItem);
+        }
+    }
+}
+
+function updateButtons()
+{
+    //Limits the buttons so "pageMin" cant go below 0 and pageMax cant go beyond "numberOfPhotos".
+    if (pageMin >= 10)
+    {
+        previousPageButton.disabled = false;
+    }
+    else
+    {
+        previousPageButton.disabled = true;
+    }
+    if (pageMax > numberOfPhotos)
+    {
+        nextPageButton.disabled = true;
+    }
+    else
+    {
+        nextPageButton.disabled = false
+    }
+}
