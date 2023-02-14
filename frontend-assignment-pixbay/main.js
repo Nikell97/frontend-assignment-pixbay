@@ -29,6 +29,9 @@ form.onsubmit = async event => {
     json = await response.json();
 
     numberOfPhotos = json.hits.length;
+    //These exists so that you cant be on a page that dont exists when searching for new pictures.
+    pagemin = 0;
+    pageMax = 10;
 
     getPhotos(pageMin, pageMax, json);
 }
@@ -65,6 +68,7 @@ nextPageButton.addEventListener("click", function()
 
 function getPhotos(pageMin, pageMax, json)
 {
+    document.getElementById("photos").innerHTML = "";
     for (let i = pageMin; i < pageMax; i++) {
         if (i < numberOfPhotos)//To keep the for loop form posting photos which dont exsists.
         {
