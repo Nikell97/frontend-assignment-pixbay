@@ -86,7 +86,7 @@ function updateButtons()
     {
         previousPageButton.disabled = true;
     }
-    if (pageMax > numberOfPhotos)
+    if (pageMax >= numberOfPhotos)
     {
         nextPageButton.disabled = true;
     }
