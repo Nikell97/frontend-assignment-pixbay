@@ -1,0 +1,40 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    width: 100%;
+    max-width: fit-content;
+}
+
+body {
+    background-image: url(background.jpg);
+    display: grid;
+    grid-template-areas:
+        "header"
+        "search"
+        "gallery"
+        "pages";
+    align-items: center;
+}
+
+h1 {
+    grid-area: header;
+}
+
+.search-options {
+    grid-area: search;
+}
+
+.gallery {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    grid-area: gallery;
+}
+
+.page-options {
+    grid-area: pages;
+}
