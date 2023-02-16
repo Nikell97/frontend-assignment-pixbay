@@ -42,12 +42,15 @@ h1 {
 }
 
 .gallery {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     grid-area: gallery;
     align-items: center;
     justify-content: space-around;
+}
+
+#photos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 205px);
+    justify-content: center;
 }
 
 .page-options {
