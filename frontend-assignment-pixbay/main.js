@@ -72,9 +72,19 @@ function getPhotos(pageMin, pageMax, json)
     for (let i = pageMin; i < pageMax; i++) {
         if (i < numberOfPhotos)//To keep the for loop form posting photos which dont exsists.
         {
-            let photoListItem = document.createElement('img');
-            photoListItem.src = json.hits[i].webformatURL;
+            let photoListItem = document.createElement('figure');
+            let photoListImg = document.createElement('img');
+            let photoListTags = document.createElement('figcaption');
+            let photoListUser = document.createElement('figcaption')
+
+            photoListImg.src = json.hits[i].webformatURL;
+            photoListTags.textContent = "Tags: " + json.hits[i].tags;
+            photoListUser.textContent = "User: " + json.hits[i].user;
+
             photoList.append(photoListItem);
+            photoListItem.append(photoListImg);
+            photoListItem.append(photoListTags);
+            photoListItem.append(photoListUser);
         }
     }
 }
