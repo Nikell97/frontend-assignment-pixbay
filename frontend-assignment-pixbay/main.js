@@ -30,9 +30,9 @@ form.onsubmit = async event => {
 
     numberOfPhotos = json.hits.length;
     //These exists so that you cant be on a page that dont exists when searching for new pictures.
-    pagemin = 0;
+    pageMin = 0;
     pageMax = 10;
-
+    updateButtons(pageMin, pageMax, numberOfPhotos);
     getPhotos(pageMin, pageMax, json);
 }
 
@@ -47,7 +47,7 @@ previousPageButton.addEventListener("click", function()
         pageMax -= 10;
         getPhotos(pageMin, pageMax, json);
 
-        updateButtons();
+        updateButtons(pageMin, pageMax, numberOfPhotos);
     }
 });
 
@@ -62,7 +62,7 @@ nextPageButton.addEventListener("click", function()
         pageMax += 10;
         getPhotos(pageMin, pageMax, json);
 
-        updateButtons();
+        updateButtons(pageMin, pageMax, numberOfPhotos);
     }
 });
 
@@ -79,7 +79,7 @@ function getPhotos(pageMin, pageMax, json)
     }
 }
 
-function updateButtons()
+function updateButtons(pageMin, pageMax, numberOfPhotos)
 {
     //Limits the buttons so "pageMin" cant go below 0 and pageMax cant go beyond "numberOfPhotos".
     if (pageMin >= 10)
