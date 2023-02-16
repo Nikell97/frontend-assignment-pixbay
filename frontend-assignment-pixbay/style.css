@@ -20,6 +20,11 @@ img {
     background-color: antiquewhite; /* so that you can see pictures with no background */
 }
 
+figure{
+    padding: 5px;
+    padding-bottom: 0px;
+}
+
 figcaption {
     width: 200px;
 
