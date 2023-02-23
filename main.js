@@ -7,8 +7,8 @@ let photoList = document.querySelector('#photos');
 let previousPageButton = document.getElementById("previousPage");
 let nextPageButton = document.getElementById("nextPage");
 
-var pageMin = 0;
-var pageMax = 10;
+previousPageButton.disabled = true;
+nextPageButton.disabled = true;
 
 var photoPage = 1
 var numberOfPhotosToPull = 10;
@@ -23,16 +23,18 @@ var color = null;
 form.onsubmit = async event => {
     event.preventDefault();
 
-    rawInput = form.searchTerm.value;
+    rawInput = await form.searchTerm.value;
     input = rawInput.replace(" ", "+");
-    rawColor = form.colorList.value;
+    rawColor = await form.colorList.value;
     color = rawColor.toLowerCase();
 
     json = await apiCall();
     numberOfPhotos = json.hits.length;
 
-    updateButtons(pageMin, pageMax, numberOfPhotos);
-    postPhotos(pageMin, pageMax, json);
+    photoPage = 1;
+
+    updateButtons(photoPage);
+    postPhotos(json);
 }
 
 async function apiCall() {
@@ -45,44 +47,32 @@ async function apiCall() {
 }
 
 previousPageButton.addEventListener("click", async function()
-{    
-    if (pageMin > 0)
-    {
+{  
         //Clears the current photos.
         document.getElementById("photos").innerHTML = "";
 
         photoPage -= 1;
         json = await apiCall();
 
-        pageMax -= 10;
-        pageMin -= 10;
+        postPhotos(json);
 
-        postPhotos(pageMin, pageMax, json);
-
-        updateButtons(pageMin, pageMax, numberOfPhotos);
-    }
+        updateButtons(photoPage);
 });
 
 nextPageButton.addEventListener("click", async function()
 {    
-    if (pageMax < numberOfPhotos) //These two are currently the same so nothing happens!
-    {
         //Clears the current photos.
         document.getElementById("photos").innerHTML = "";
 
         photoPage += 1;
         json = await apiCall();
 
-        pageMax += 10;
-        pageMin += 10;
+        postPhotos(json);
 
-        postPhotos(pageMin, pageMax, json);
-
-        updateButtons(pageMin, pageMax, numberOfPhotos);
-    }
+        updateButtons(photoPage);
 });
 
-function postPhotos(pageMin, pageMax, json)
+function postPhotos(json)
 {
     document.getElementById("photos").innerHTML = "";
     for (let i = 0; i < json.hits.length; i++) {
@@ -105,23 +95,23 @@ function postPhotos(pageMin, pageMax, json)
     }
 }
 
-function updateButtons(pageMin, pageMax, numberOfPhotos)
+function updateButtons(photoPage)
 {
-    //Limits the buttons so "pageMin" cant go below 0 and pageMax cant go beyond "numberOfPhotos".
-    if (pageMin >= 10)
+    //Limits the buttons so "pageMin" cant go below 0 and pageMax cant go beyond 50, which is the max number of pages we can fetch with the api.
+    if (photoPage > 1)
     {
-        //previousPageButton.disabled = false;
+        previousPageButton.disabled = false;
     }
     else
     {
-        //previousPageButton.disabled = true;
+        previousPageButton.disabled = true;
     }
-    if (pageMax >= numberOfPhotos)
+    if (photoPage >= Math.ceil(json.totalHits/10))
     {
-        //nextPageButton.disabled = true;
+        nextPageButton.disabled = true;
     }
     else
     {
-        //nextPageButton.disabled = false
+        nextPageButton.disabled = false
     }
 }
